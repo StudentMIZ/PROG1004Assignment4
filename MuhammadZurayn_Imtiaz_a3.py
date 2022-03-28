@@ -23,9 +23,8 @@ def countdown(end):                                                     # define
     return(slist)
 
 class SheridanSystem:
-    def __init__(self, noOfBuild):
-        self._noOfBuild = noOfBuild
-
+    def __init__(self):
+        self._noOfBuild = 0
     def getnoOfBuild(self):
         return self._noOfBuild
 
@@ -68,10 +67,10 @@ class SheridanSystem:
 
 
 class Building:
-    def __init__(self, noOfSensors, listOfSensors, buildName):
-        self._noOfSensors = noOfSensors
-        self._listOfSensors = listOfSensors
-        self._buildName = buildName
+    def __init__(self):
+        self._noOfSensors = 4
+        self._listOfSensors = []
+        self._buildName = "buildName"
 
     def getnoOfSensors(self):
         return self._noOfSensors
@@ -118,11 +117,11 @@ class Application:
         SheridanSystem()
 
 class IotSensors:
-    def __init__(self, posX, posY, noDays, avgRead):
-        self._posX = posX
-        self._posY = posY
-        self._noDays = noDays
-        self._avgRead = avgRead
+    def __init__(self):
+        self._posX = (0.1, 0.1)
+        self._posY = (0.1, 0.1)
+        self._noDays = 0
+        self._avgRead = 0.1
 
     def getposX(self):
         return self._posX
@@ -161,8 +160,8 @@ class IotSensors:
 
 class Co2Sensors:
     carbon_values = []
-    def __init__(self, co2Levels):
-        self._co2Levels = co2Levels
+    def __init__(self):
+        self._co2Levels = 0
 
     def getco2Levels(self):
         return self._co2Levels
