@@ -48,7 +48,22 @@ class SheridanSystem:
                 break                                                       # stops the loop as an accepted value was made by the user
         print()                                                             # prints an empty line of code, giving the output a better look for the user (refer to this explanation when used again later)
         building_list = countdown(noOfBuild)                              # creates a new variable that is a list of integers made when the derived value of 'sensors_input' is run through the 'countdown' function
-        return building_list
+        for _ in  building_list:
+            print("Bulding", _)
+            print("Enter the building name:")                      # lets the user know which day's CO2 value they should input
+        while True:
+            try:
+                b_input = int(input())                         # asks the user to input a variable under the int class, which will be put into the 'carbon_values' list
+                if(b_input < 0):                               # checks if the value of the variable is above 50, or below 20, as that is the given range in the problem
+                    print("Invalid Entry")                          # lets the user know that the input isn't accepted, and they must try again
+                    print("Re-Enter the building name: ")
+                    continue                                        # loops back to the if statement
+            except ValueError:                                      # doesn't accept any other type of value other than of the int class
+                print("Invalid Entry")                              # informs the user that the value is not accepted and to try again
+                print("Re-Enter the building name: ")
+                continue                                            # loops back to ask the user to input a value again
+            else:
+                break
         
 
 
@@ -75,6 +90,12 @@ class Building:
 
     def setbuildName(self, newbuildName):
         self._buildName = newbuildName
+
+    def createSensors(self, noOfSensors, listOfSensors):
+        pass
+
+    def printSenInfo(self, buildName):
+        pass
 
 class Application:
     def __init__(self):
@@ -133,6 +154,16 @@ class Co2Sensors:
 
     def setco2Levels(self, newco2Levels):
         self._co2Levels = newco2Levels
+
+        def sensorPos(self):
+            pass
+
+    def sensorReadings(self):
+        pass
+
+    def computeAvg(self):
+        pass
+
 
 
 
