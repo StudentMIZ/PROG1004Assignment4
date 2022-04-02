@@ -14,6 +14,8 @@ sensors in each building. Afterwards, for each building, the program will ask fo
 import statistics
 from random import randint
 
+buildName_list = ["A-Building", "B-Building", "C-Building", "D-Building", "E-Building", "F-Building", "G-Building", "H-Building", "I-Building", "J-Building", "K-Building", "L-Building", "M-Building", "N-Building", "O-Building",  "P-Building", "Q-Building", "R-Building", "S-Building", "T-Building", "U-Building", "V-Building", "W-Building", "X-Building", "Y-Building", "Z-Building"]
+
 def countdown(end):                                                     # defines and declares function 'countdown', which is used to create a list of integer values up to the number the user inputted when asked
     i = 1                                                               # sets the counter to 1, don't want to include 0 in the list as there is no 'Sensor 0'
     slist = []                                                          # creates an empty list, 'slist', in which values will later be added
@@ -22,16 +24,24 @@ def countdown(end):                                                     # define
         i +=1                                                           # increments the counter 'i' by 1 for every loop, until i is <= to the integer the user inputted
     return(slist)
 
+
+
+
 class SheridanSystem:
+    buildNameList = []
     def __init__(self):
         self._noOfBuild = 0
+
     def getnoOfBuild(self):
         return self._noOfBuild
 
     def setnoOfBuild(self, newnoOfBuild):
         self._noOfBuild = newnoOfBuild
 
-    def run(self, noOfBuild):
+
+
+
+    def run(self):
         while True:                                                         # makes it so the function loops or doesn't as long as certain conditions are met
             try:
                 noOfBuild = int(input("Enter the number of buildings: "))         # asks the user to input an integer value, of how many sensors are deployed in the area
@@ -47,30 +57,36 @@ class SheridanSystem:
                 break                                                       # stops the loop as an accepted value was made by the user
         print()                                                             # prints an empty line of code, giving the output a better look for the user (refer to this explanation when used again later)
         building_list = countdown(noOfBuild)                              # creates a new variable that is a list of integers made when the derived value of 'sensors_input' is run through the 'countdown' function
-        for _ in  building_list:
-            print("Bulding", _)
-            print("Enter the building name:")                      # lets the user know which day's CO2 value they should input
-        while True:
-            try:
-                b_input = int(input())                         # asks the user to input a variable under the int class, which will be put into the 'carbon_values' list
-                if(b_input < 0):                               # checks if the value of the variable is above 50, or below 20, as that is the given range in the problem
+        buildNameList = []
+        for _ in  building_list:                
+            while True:
+                try:
+                    print("Bulding", _)
+                    b_input = print(input("Enter the building name:"))
+                    if(b_input in buildName_list):                               # checks if the value of the variable is above 50, or below 20, as that is the given range in the problem
+                        print(b_input)                          # lets the user know that the input isn't accepted, and they must try again
+                        buildNameList.append(b_input)
+                        obj2 = Building(buildNameList)
+                        for _ in buildNameList:
+                            obj2.createSensors()
+                        break                                       
+                except ValueError:                                      # doesn't accept any other type of value other than of the int class
+                    print("Invalid Entry")                              # informs the user that the value is not accepted and to try again
+                    print("Re-Enter the building name: ")
+                    continue                                            # loops back to ask the user to input a value again
+                else:
                     print("Invalid Entry")                          # lets the user know that the input isn't accepted, and they must try again
                     print("Re-Enter the building name: ")
-                    continue                                        # loops back to the if statement
-            except ValueError:                                      # doesn't accept any other type of value other than of the int class
-                print("Invalid Entry")                              # informs the user that the value is not accepted and to try again
-                print("Re-Enter the building name: ")
-                continue                                            # loops back to ask the user to input a value again
-            else:
-                break
+                    continue
         
 
 
+
 class Building:
-    def __init__(self):
+    def __init__(self, buildName):
         self._noOfSensors = 4
         self._listOfSensors = []
-        self._buildName = "buildName"
+        self._buildName = buildName
 
     def getnoOfSensors(self):
         return self._noOfSensors
@@ -90,7 +106,7 @@ class Building:
     def setbuildName(self, newbuildName):
         self._buildName = newbuildName
 
-    def createSensors(self, noOfSensors, listOfSensors):
+    def createSensors(self):
         while True:                                                         # makes it so the function loops or doesn't as long as certain conditions are met
             try:
                 noOfSensors = int(input("Enter the number of sensors deployed across Sheridan Campus: "))         # asks the user to input an integer value, of how many sensors are deployed in the area
@@ -107,14 +123,24 @@ class Building:
         return listOfSensors 
         
 
-    def printSenInfo(self, buildName):
-        pass
+    def printSenInfo(self, building_list):
+        for _ in building_list:
+            pass
+            
+
+
+
 
 class Application:
     def __init__(self):
         pass
+
     def start(self):
-        SheridanSystem()
+        test = SheridanSystem()
+        test.run()
+
+
+
 
 class IotSensors:
     def __init__(self):
@@ -158,7 +184,9 @@ class IotSensors:
 
     
 
-class Co2Sensors:
+
+
+class Co2Sensors(IotSensors):
     carbon_values = []
     def __init__(self):
         self._co2Levels = 0
@@ -169,11 +197,12 @@ class Co2Sensors:
     def setco2Levels(self, newco2Levels):
         self._co2Levels = newco2Levels
 
-    def sensorPos(self, posX, posY):
+    def sensorPos(self):
         posX = randint(0,100)
         posY = randint (0,100)
+        return (posX, posY)
 
-    def sensorReadings(self, co2Levels, carbon_values):
+    def sensorReadings(self, carbon_values):
         for _ in 
         print("Enter the CO2 Reading (PPM) for Day", _, ":")                      # lets the user know which day's CO2 value they should input
         while True:
@@ -199,3 +228,6 @@ class Co2Sensors:
 
 
 
+obj1 = Application()
+obj1.start()
+obj2 = Building(buildNameList)
