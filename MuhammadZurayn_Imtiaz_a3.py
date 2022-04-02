@@ -25,7 +25,13 @@ def countdown(end):                                                             
     return(slist)
 
 
+class Application:
+    def __init__(self):
+        pass
 
+    def start(self):                                                                                                    # start method that stars the Sheridan System
+        test = SheridanSystem()
+        test.run()
 
 class SheridanSystem:                                                                                           # class made for the number of buildings, and the names of the buildings
     def __init__(self):
@@ -68,7 +74,7 @@ class SheridanSystem:                                                           
                         obj2 = Building(buildNameList)
                         for _ in buildNameList:
                             obj2.createSensors()
-                            break                         
+                            break
                 except ValueError:                                                                              # doesn't accept any other type of value other than of the int class
                     print()
                     print("Invalid Entry")                                                                      # informs the user that the value is not accepted and to try again
@@ -106,17 +112,17 @@ class Building:
     def getbuildName(self):                                                                                         # accessor method
         return self._buildName
 
-    def setbuildName(self, newbuildName):                                                                           # mutator
+    def setbuildName(self, newbuildName):                                                                           # mutator method
         self._buildName = newbuildName
 
     def createSensors(self):
         while True:                                                                                                 # makes it so the function loops or doesn't as long as certain conditions are met
             try:
                 noOfSensors = int(input("Enter the number of sensors deployed across Sheridan Campus: "))           # asks the user to input an integer value, of how many sensors are deployed in the area
-                if(noOfSensors < 1):                                                                                # this is to ensure the user can't input anything lower than a value of 1
-                    print("Invalid Entry")                                                                          # works to print out a statement letting the user know that they have made an incorrect input
-                    continue                                                                                        # this makes it so that it loops back to the earlier line of code
-            except ValueError:                                                                                      # this is for instances where the user doesn't input the value as an integer, as that is not an accepted entry
+                if(noOfSensors < 1):                                                                                 # this is to ensure the user can't input anything lower than a value of 1
+                    print("Invalid Entry")                                                                           # works to print out a statement letting the user know that they have made an incorrect input
+                    continue                                                                                         # this makes it so that it loops back to the earlier line of code
+            except ValueError:                                                                                       # this is for instances where the user doesn't input the value as an integer, as that is not an accepted entry
                 print("Invalid Entry")
                 continue
             else:
@@ -143,25 +149,12 @@ class Building:
                 obj3.carbon_values()
         
 
-    def printSenInfo(self, buildName, posX, posY, ):                                                                  # prints out all of the info, including the building name, its position, the daily Co2 readings, and as well as the average value of the Co2 readings
+    def printSenInfo(self, buildName, posX, posY, avgRead):                                                           # prints out all of the info, including the building name, its position, the daily Co2 readings, and as well as the average value of the Co2 readings
             print("This is for building: ", buildName)
             print(("x: ", posX, "y: ", posY))
+            print("Average Reading(s): ", avgRead)
 
             
-
-
-
-
-class Application:
-    def __init__(self):
-        pass
-
-    def start(self):                                                                                                    # start method that stars the Sheridan System
-        test = SheridanSystem()
-        test.run()
-
-
-
 
 class IotSensors():
     def __init__(self):
@@ -218,31 +211,32 @@ class Co2Sensors(IotSensors):
     def setco2Levels(self, newco2Levels):                                                                               # mutator method
         self._co2Levels = newco2Levels
 
-    def sensorPos(self):
+    def sensorPos(self):                                                                                                # calculates random position for the sesnor
         posX = randint(0,100)
         posY = randint (0,100)
         return (posX, posY)
 
-    def sensorReadings(self):
+    def sensorReadings(self, noDays):
         carbon_values = []
-        print(input("Enter the CO2 Reading (PPM) for Day", _, ":"))                                                     # lets the user know which day's CO2 value they should input
-        while True:
-            try:
-                co2Levels = int(input())                                                                                # asks the user to input a variable under the int class, which will be put into the 'carbon_values' list
-                if(co2Levels < 0):                                                                                      # checks if the value of the variable is above 50, or below 20, as that is the given range in the problem
-                    print("Invalid Entry")                                                                              # lets the user know that the input isn't accepted, and they must try again
-                    continue                                                                                            # loops back to the if statement
-            except ValueError:                                                                                          # doesn't accept any other type of value other than of the int class
-                print("Invalid Entry")                                                                                  # informs the user that the value is not accepted and to try again
-                continue                                                                                                # loops back to ask the user to input a value again
-            else:
-                break                                                                                                   # ends the loop as an accepted value is given
-        carbon_values.append(co2Levels)
-        computeAvg()
+        for _ in noDays:
+            print(input("Enter the CO2 Reading (PPM) for Day", _, ":"))                                                     # lets the user know which day's CO2 value they should input
+            while True:
+                try:
+                    co2Levels = int(input())                                                                                # asks the user to input a variable under the int class, which will be put into the 'carbon_values' list
+                    if(co2Levels < 0):                                                                                      # checks if the value of the variable is above 50, or below 20, as that is the given range in the problem
+                        print("Invalid Entry")                                                                              # lets the user know that the input isn't accepted, and they must try again
+                        continue                                                                                            # loops back to the if statement
+                except ValueError:                                                                                          # doesn't accept any other type of value other than of the int class
+                    print("Invalid Entry")                                                                                  # informs the user that the value is not accepted and to try again
+                    continue                                                                                                # loops back to ask the user to input a value again
+                else:
+                    break                                                                                                   # ends the loop as an accepted value is given
+            carbon_values.append(co2Levels)
+            computeAvg()
 
         def computeAvg():
-            avgRead = round(statistics.mean(carbon_values), 2)                                                          # averages out all the values given by the user, while also rounding the values to 2 decimal points
-            print("Rounded Average Readings", avgRead, "PPM")                                                           # prints out the value derived from 'avgRead' in the output of the code, for the user to see
+            avgRead = round(statistics.mean(carbon_values), 2)                                                             # averages out all the values given by the user, while also rounding the values to 2 decimal points
+            print("Rounded Average Readings", avgRead, "PPM")                                                              # prints out the value derived from 'avgRead' in the output of the code, for the user to see
             print()
             carbon_values.clear()
 
@@ -251,4 +245,6 @@ class Co2Sensors(IotSensors):
 
 obj1 = Application()
 obj1.start()
-obj3 = Building
+obj3 = Building()
+obj4 = Co2Sensors()
+obj4.sensorPos()
