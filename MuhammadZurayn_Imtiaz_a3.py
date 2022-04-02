@@ -65,28 +65,11 @@ class SheridanSystem:                                                           
         buildNameList = []
         for _ in  building_list:
             print("Building", _)           
-            while True:
-                try:
-                    b_input = print(input("Enter the building name: "))
-                    if(b_input in buildName_list):                                                              # checks if the value of the variable is above 50, or below 20, as that is the given range in the problem
-                        print(b_input)                                                                          # lets the user know that the input isn't accepted, and they must try again
-                        buildNameList.append(b_input)
-                        obj2 = Building(buildNameList)
-                        for _ in buildNameList:
-                            obj2.createSensors()
-                            break
-                except ValueError:                                                                              # doesn't accept any other type of value other than of the int class
-                    print()
-                    print("Invalid Entry")                                                                      # informs the user that the value is not accepted and to try again
-                    print("Re-Enter the building name: ")
-                    print()
-                    continue                                                                                    # loops back to ask the user to input a value again
-                else:
-                    print()
-                    print("Invalid Entry")                                                                      # lets the user know that the input isn't accepted, and they must try again
-                    print("Re-Enter the building name: ")
-                    print()
-                    continue
+            b_input = print(input("Enter the building name: "))
+            buildNameList.append(b_input)
+            obj2 = Building(buildNameList)
+            for _ in buildNameList:
+                obj2.createSensors()
         
 
 
@@ -146,7 +129,7 @@ class Building:
             days_list = countdown(noDays)
             for _ in days_list:
                 obj3 = Co2Sensors()
-                obj3.carbon_values()
+                obj3.carbon_values(noDays)
         
 
     def printSenInfo(self, buildName, posX, posY, avgRead):                                                           # prints out all of the info, including the building name, its position, the daily Co2 readings, and as well as the average value of the Co2 readings
